@@ -51,19 +51,31 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
+
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
+    // skip Material Design and build directly on top of foundational components
+    implementation(libs.androidx.compose.foundation)
+    // only import the main APIs for the underlying toolkit systems,
+    // such as input and measurement/layout
+    implementation(libs.androidx.compose.ui)
+
+    implementation(libs.androidx.compose.ui.graphics)
+
+    // Android Studio Preview support
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+
+    // UI Tests
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // - Integration with activities
+    implementation(libs.androidx.activity.compose)
+    // - Integration with ViewModels
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // - Integration with LiveData
+    implementation(libs.androidx.compose.runtime.livedata)
+
 }
