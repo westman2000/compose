@@ -52,6 +52,7 @@ android {
 dependencies {
 
 
+    // region Compose
     implementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
@@ -60,8 +61,13 @@ dependencies {
     // only import the main APIs for the underlying toolkit systems,
     // such as input and measurement/layout
     implementation(libs.androidx.compose.ui)
-
     implementation(libs.androidx.compose.ui.graphics)
+    // animation
+    implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.animation.core)
+    implementation(libs.androidx.compose.animation.graphics)
+    implementation(libs.androidx.compose.animation.android)
+
 
     // Android Studio Preview support
     debugImplementation(libs.androidx.compose.ui.tooling)
@@ -77,5 +83,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // - Integration with LiveData
     implementation(libs.androidx.compose.runtime.livedata)
+    // endregion
+
+
+    // Graphics
+    implementation(libs.androidx.graphics.core)
+    implementation(libs.androidx.graphics.path)
+    implementation(libs.androidx.graphics.shapes)
+
 
 }
