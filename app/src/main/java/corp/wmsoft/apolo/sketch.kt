@@ -1,9 +1,6 @@
 package corp.wmsoft.apolo
 
 
-
-import android.graphics.Canvas
-import android.graphics.Paint
 import android.util.Log
 import android.view.MotionEvent
 import androidx.compose.foundation.Canvas
@@ -146,8 +143,11 @@ fun nextGeneration() {
         // Generate new circles based on Descartes' theorem
         val newCircles = complexDescartes(c1, c2, c3, k4)
 
+        Log.d("TAG", "nextGeneration: newCircles:${newCircles.size}")
+
         for (newCircle in newCircles) {
             if (validate(newCircle, c1, c2, c3)) {
+                Log.d("TAG", "ADD newCircle:$newCircle")
                 allCircles.add(newCircle)
                 // New triplets formed with the new circle for the next generation
                 val t1 = listOf(c1, c2, newCircle)
@@ -162,27 +162,34 @@ fun nextGeneration() {
 
 fun draw(canvas: DrawScope) {
 
-    //canvas.drawColor(Color.WHITE)  // Clears the background to white
-
     // Current total circles
     val len1 = allCircles.size
 
+    Log.d("TAG", "draw: len1:$len1")
     // Generate next generation of circles
     nextGeneration()
 
     // New total circles
     val len2 = allCircles.size
+    Log.d("TAG", "draw: len2:$len2")
 
     // Stop drawing when no new circles are added
     if (len1 == len2) {
-        println("done")
+        Log.d("TAG", "done ($len1 == $len2)")
+        return
         // Assuming a function `noLoop()` to stop the drawing loop, replace with appropriate control mechanism
     }
+
+    if (len2 > 9000)
+        return
+
 
     // Display all circles
     for (c in allCircles) {
         c.show(canvas)
     }
+
+    draw(canvas)
 }
 
 

@@ -30,10 +30,8 @@ class Circle(bend: Double, x: Double, y: Double) {
 
     // Computes the distance between this circle and another circle
     fun dist(other: Circle): Double {
-        // Assuming a function `calculateDistance(x1: Double, y1: Double, x2: Double, y2: Double): Double` exists:
-        //return dist(
-//            this.center.a, this.center.b, other.center.a, other.center.b
-//        )
-        return 10.0
+        return Math.sqrt(
+            Math.pow(this.center.a - other.center.a, 2.0) + Math.pow(this.center.b - other.center.b, 2.0)
+        )
     }
 }
