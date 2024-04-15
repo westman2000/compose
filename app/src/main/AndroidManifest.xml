@@ -12,7 +12,7 @@
         tools:ignore="MissingApplicationIcon">
 
         <activity
-            android:name=".MainActivity"
+            android:name="corp.wmsoft.drawcompose.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.DrawCompose">
 

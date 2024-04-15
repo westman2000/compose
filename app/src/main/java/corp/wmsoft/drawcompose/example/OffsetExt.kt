@@ -1,4 +1,4 @@
-package corp.wmsoft.drawcompose
+package corp.wmsoft.drawcompose.example
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size

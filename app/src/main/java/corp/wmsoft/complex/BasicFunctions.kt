@@ -1,4 +1,4 @@
-package corp.wmsoft.drawcompose
+package corp.wmsoft.complex
 
 import kotlin.math.*
 
@@ -47,8 +47,8 @@ var sin : (Complex) -> Complex = { z ->
         NaN, INF -> NaN
         else -> {
             complex(
-                kotlin.math.sin(z.re) * kotlin.math.cosh(z.im),
-                kotlin.math.cos(z.re) * kotlin.math.sinh(z.im))
+                kotlin.math.sin(z.re) * cosh(z.im),
+                kotlin.math.cos(z.re) * sinh(z.im))
         }
     }
 }
@@ -68,8 +68,8 @@ var cos : (Complex) -> Complex = { z ->
         NaN, INF -> NaN
         else -> {
             complex(
-                kotlin.math.cos(z.re) * kotlin.math.cosh(z.im),
-                -kotlin.math.sin(z.re) * kotlin.math.sinh(z.im))
+                kotlin.math.cos(z.re) * cosh(z.im),
+                -kotlin.math.sin(z.re) * sinh(z.im))
         }
     }
 }
@@ -95,7 +95,7 @@ var sqrt : (Complex) -> Complex = { z ->
             if (z.re >= 0) {
                 complex(t, z.im / (2 * t))
             } else {
-                complex(kotlin.math.abs(z.im) / (2 * t), Math.copySign(1.0, z.im) * t)
+                complex(abs(z.im) / (2 * t), Math.copySign(1.0, z.im) * t)
             }
         }
     }
@@ -125,7 +125,7 @@ var pow : (Complex, Complex) -> Complex = { z, w ->
  * @param w exponent
  * @return x^w
  */
-fun pow(x: Number, w:Complex): Complex {
+fun pow(x: Number, w: Complex): Complex {
     val d = x.toDouble()
     return when {
         d < 0.0 -> NaN

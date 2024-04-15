@@ -1,4 +1,4 @@
-package corp.wmsoft.drawcompose
+package corp.wmsoft.drawcompose.example
 
 
 import android.graphics.RuntimeShader
@@ -25,8 +25,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.ImageShader
 import androidx.compose.ui.graphics.LinearGradientShader
 import androidx.compose.ui.graphics.RadialGradientShader
 import androidx.compose.ui.graphics.Shader
@@ -34,13 +32,8 @@ import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import org.intellij.lang.annotations.Language
 
 /*

@@ -1,4 +1,4 @@
-package corp.wmsoft.drawcompose
+package corp.wmsoft.drawcompose.example
 
 import corp.wmsoft.manim.animation.Create
 import corp.wmsoft.manim.mobject.geometry.Circle
