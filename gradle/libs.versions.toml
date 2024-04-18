@@ -20,6 +20,8 @@ lifecycleViewmodelCompose = "2.7.0"
 
 graphics = "1.+"
 
+junit = "4.13.2"
+
 
 [libraries]
 
@@ -51,6 +53,7 @@ androidx-graphics-core = { group = "androidx.graphics", name = "graphics-core", 
 androidx-graphics-path = { group = "androidx.graphics", name = "graphics-path", version.ref = "graphics" }
 androidx-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphics" }
 
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

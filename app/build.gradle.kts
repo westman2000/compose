@@ -91,5 +91,6 @@ dependencies {
     implementation(libs.androidx.graphics.path)
     implementation(libs.androidx.graphics.shapes)
 
-
+    // test
+    testImplementation(libs.junit)
 }

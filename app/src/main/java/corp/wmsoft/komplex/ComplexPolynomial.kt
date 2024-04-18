@@ -1,4 +1,4 @@
-package com.tecacet.komplex
+package corp.wmsoft.komplex
 
 val Z = ComplexPolynomial.of(0.0, 1.0)
 

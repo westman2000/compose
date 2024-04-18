@@ -1,4 +1,4 @@
-package com.tecacet.komplex
+package corp.wmsoft.komplex
 
 import kotlin.math.*
 
@@ -77,7 +77,7 @@ fun ln(c: Complex) = Complex(ln(c.abs()), c.phase())
  * Roots of unity
  */
 fun roots(n: Int) =
-    (1 ..n).map { exp(i*2*PI*it/n) }
+    (1 ..n).map { exp(i *2*PI*it/n) }
 
 operator fun Number.plus(c: Complex) = Complex(this.toDouble() + c.real, c.img)
 
@@ -170,11 +170,17 @@ class Complex(val real: Double, val img: Double) {
          */
         val ONE = Complex(1.0, 0.0)
 
+        /** "Not a number" represents a essential singularity */
+        val NaN = Complex(Double.NaN, Double.NaN)
+
+        /** Infinity represents the north pole of the complex sphere. */
+        val INF = Complex(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+
         const val DEFAULT_TOLERANCE = 1.0E-15
 
         fun fromNumber(n: Number) = Complex(n.toDouble(), 0.0)
 
-        fun fromPolar(radius: Double, theta: Double) :Complex  =radius*exp(i*theta)
+        fun fromPolar(radius: Double, theta: Double) : Complex =radius* exp(i *theta)
 
     }
 
@@ -201,4 +207,36 @@ class Complex(val real: Double, val img: Double) {
     infix fun to(exponent: Complex) = this.pow(exponent)
 
     infix fun to(exponent: Number) = this.pow(exponent)
+
+    // Hint: Usually it is not necessary to override the (calculated) properties
+    // arg and mod with a lazy and caching-like kind. Using Kotlin's "lazy" increases
+    // the execution time by a factor of 6. So the properties would have to be read
+    // at least six times before caching would pay off, which is quite unlikely.
+
+    /** The argument of this complex number (angle of the polar coordinate representation) */
+    val arg: Double
+        get() {
+            return when {
+                isInfinite() -> Double.NaN
+                isNaN() -> Double.NaN
+                real > 0.0 -> atan(img / real)
+                real < 0.0 && img >= 0.0 -> atan(img / real) + PI
+                real < 0.0 && img < 0.0 -> atan(img / real) - PI
+                real == 0.0 && img > 0.0 -> PI / 2
+                real == 0.0 && img < 0.0 -> -PI / 2
+                else -> 0.0
+            }
+        }
+
+    /**
+     *  checks infinity property (remark that in case of complex numbers there is only one unsigned infinity)
+     *  @return true if this is infinite
+     */
+    fun isInfinite() = this === INF
+
+    /**
+     * checks the "not a number" property (NaN represents an essential singularity)
+     * @return true if this is NaN
+     */
+    fun isNaN() = this === NaN
 }
