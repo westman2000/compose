@@ -31,6 +31,7 @@ androidx-compose-animation-core = { module = "androidx.compose.animation:animati
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "animation" }
 androidx-compose-animation-android = { module = "androidx.compose.animation:animation-android", version.ref = "animation" }
 
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }

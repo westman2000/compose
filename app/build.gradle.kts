@@ -56,6 +56,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
+    implementation(libs.androidx.material3)
+
     // skip Material Design and build directly on top of foundational components
     implementation(libs.androidx.compose.foundation)
     // only import the main APIs for the underlying toolkit systems,
