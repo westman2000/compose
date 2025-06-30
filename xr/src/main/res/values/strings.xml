@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">XRCompose</string>
+
+    <string name="search_is_not_implemented">Searching for %s (not implemented)</string>
+    <string name="search_product_name">Search Product Name</string>
+
+    <string name="enter_home_space_mode">enter home space mode</string>
+    <string name="enter_full_space_mode">enter full space mode</string>
+    <string name="set_virtual_environment">set virtual environment</string>
+    <string name="set_passthrough">set passthrough</string>
+
+</resources>
