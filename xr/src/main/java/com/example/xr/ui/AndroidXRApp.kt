@@ -117,5 +117,5 @@ private fun TopAppBar() {
 
 @Composable
 private fun PrimaryContent(modifier: Modifier = Modifier) {
-    PopupSample(modifier)
+    spatialPopup_performanceWithManyPopups_handlesEfficiently(modifier)
 }
