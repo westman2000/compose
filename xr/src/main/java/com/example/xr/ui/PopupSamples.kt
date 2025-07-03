@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -28,6 +29,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateListOf
@@ -51,9 +54,150 @@ import androidx.xr.compose.spatial.OrbiterEdge
 import androidx.xr.compose.spatial.SpatialDialog
 import androidx.xr.compose.spatial.SpatialElevationLevel
 import androidx.xr.compose.spatial.SpatialPopup
+import androidx.xr.compose.spatial.SpatialPopupProperties
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.UUID
 
+
+
+@Composable
+fun spatialPopup_HSM_dismissOnBackPressTrue_invokesDismissRequest(modifier: Modifier = Modifier) {
+    val showPopup = remember { mutableStateOf(true) }
+
+    if (showPopup.value) {
+        SpatialPopup(
+            onDismissRequest = {
+                showPopup.value = false
+                println("onDismissRequest Called")
+            },
+            properties = SpatialPopupProperties(
+                dismissOnClickOutside = false,
+                dismissOnBackPress = true
+            ),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(330.dp)
+                    .background(Color.Black)
+            ) {
+                Text("Spatial Popup")
+            }
+        }
+    }
+}
+
+@Composable
+fun spatialPopup_atScreenEdgeWithLargeContent_displayed(modifier: Modifier = Modifier) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        SpatialPopup(
+            alignment = Alignment.BottomEnd,
+            offset = IntOffset(40, 40),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .testTag("boundedPopup")
+            ) {
+                Text("Bounded Popup")
+            }
+        }
+    }
+}
+
+var recompositionCount = 0
+val maxAllowedRecompositions = 100 // 100 is empirically chosen as reasonable max
+@Composable
+fun spatialPopup_infiniteRecomposition_prevented(modifier: Modifier = Modifier) {
+    var state by remember { mutableStateOf(0) }
+
+    SpatialPopup(
+        offset = IntOffset(50, 500),
+    ) {
+        LaunchedEffect(state) {
+            recompositionCount++
+            if (recompositionCount < maxAllowedRecompositions) {
+                // This could potentially cause infinite recomposition
+                // if not handled properly
+                state++
+            }
+        }
+
+        Text("Recomposition Test: $state")
+    }
+}
+
+@Composable
+fun spatialPopup_withAsyncContent_loadsCorrectly(modifier: Modifier = Modifier) {
+    var contentLoaded by mutableStateOf(false)
+
+    SpatialPopup {
+        if (!contentLoaded) {
+            CircularProgressIndicator(
+                modifier = Modifier.testTag("loadingIndicator")
+            )
+
+            LaunchedEffect(Unit) {
+                delay(500) // Simulate async loading
+                contentLoaded = true
+            }
+        } else {
+            Text("Async Content Loaded", modifier = Modifier.testTag("asyncContent"))
+        }
+    }
+}
+
+@Composable
+fun spatialPopup_concurrentModification_handlesGracefully(modifier: Modifier = Modifier) {
+    var popup1Visible by remember { mutableStateOf(true) }
+    var popup2Visible by remember { mutableStateOf(false) }
+    var loopDetected = false
+    var iterationCount = 0
+
+    LaunchedEffect(popup1Visible, popup2Visible) {
+        iterationCount++
+        if (iterationCount > 10) { // 10 is empirically chosen as max reasonable iterations
+            loopDetected = true
+        }
+    }
+
+    if (popup1Visible) {
+        SpatialPopup {
+            Column {
+                Text("Popup 1")
+                Button(
+                    onClick = {
+                        popup2Visible = true
+                        popup1Visible = false
+                    },
+                    modifier = Modifier.testTag("showPopup2")
+                ) {
+                    Text("Show Popup 2")
+                }
+            }
+        }
+    }
+
+    if (popup2Visible) {
+        SpatialPopup(
+            offset = IntOffset(300, 300),
+        ) {
+            Column {
+                Text("Popup 2")
+                Button(
+                    onClick = {
+                        popup1Visible = true
+                        popup2Visible = false
+                    },
+                    modifier = Modifier.testTag("showPopup1")
+                ) {
+                    Text("Show Popup 1")
+                }
+            }
+        }
+    }
+
+}
 
 @Composable
 fun spatialPopup_performanceWithManyPopups_handlesEfficiently(modifier: Modifier = Modifier) {

@@ -117,5 +117,5 @@ private fun TopAppBar() {
 
 @Composable
 private fun PrimaryContent(modifier: Modifier = Modifier) {
-    spatialPopup_performanceWithManyPopups_handlesEfficiently(modifier)
+    spatialPopup_HSM_dismissOnBackPressTrue_invokesDismissRequest(modifier)
 }
